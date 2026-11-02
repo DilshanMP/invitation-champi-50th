@@ -11,7 +11,7 @@ window.INVITE = {
   "name": "CHAMPI",   // Name (scenes 2 and 3)
   "k06": "fifty golden years",
   "k07": "ITC RATNADIPA  ·  COLOMBO",
-  "k08": "YOU & YOUR FAMILY ARE",   // Invite line on the family link (…/?family)
+  "k08": "YOU & YOUR FAMILY ARE",   // Invite line on the private family link
   "k08_single": "YOU ARE",   // Invite line on the normal link
   "k09": "CORDIALLY INVITED",
   "k10": "to celebrate the birthday of",

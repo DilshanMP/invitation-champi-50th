@@ -2,8 +2,19 @@
   var LAYOUT = window.LAYOUT || [], TEXT = window.INVITE || {};
   // Two versions of the same invitation: the normal link says "YOU ARE",
   // the family link (?family or #family) says "YOU & YOUR FAMILY ARE".
-  var family = /(^|[?&#])family\b/i.test(location.search + location.hash);
-  if (!family && TEXT.k08_single != null) TEXT.k08 = TEXT.k08_single;
+  // Everyone starts on the normal wording; only the private family code switches it.
+  var FAMILY_HASH = '8a6665d40469dc70d113694d7f7d1c71e49b1397bf7685d3d8a786be58bcecd9';
+  var familyText = TEXT.k08;
+  if (TEXT.k08_single != null) TEXT.k08 = TEXT.k08_single;
+  function checkFamily() {
+    var m = /[?&]i=([A-Za-z0-9]{6,32})/.exec(location.search);
+    if (!m || !window.crypto || !crypto.subtle || !window.TextEncoder) return;
+    crypto.subtle.digest('SHA-256', new TextEncoder().encode(m[1])).then(function (buf) {
+      var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+      if (hex !== FAMILY_HASH) return;
+      document.querySelectorAll('[data-k="k08"]').forEach(function (el) { setText(el, familyText); });
+    }).catch(function () {});
+  }
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var book = document.getElementById('book');
 
@@ -32,7 +43,7 @@
     sc.items.forEach(function (it) {
       var el;
       if (it.t === 'text') {
-        el = document.createElement(it.tag || 'div'); el.className = it.cls; el.style.cssText = it.style;
+        el = document.createElement(it.tag || 'div'); el.className = it.cls; el.style.cssText = it.style; el.dataset.k = it.k;
         if (it.href) { el.href = it.href; el.target = '_blank'; el.rel = 'noopener'; }
         setText(el, TEXT[it.k] != null ? TEXT[it.k] : '');
         el.style.setProperty('--i', /foot/.test(it.cls) ? k + 1 : k++);
@@ -50,14 +61,20 @@
     book.appendChild(sec);
   });
 
+  checkFamily();
   var scenes = Array.prototype.slice.call(book.querySelectorAll('.scene'));
   if (reduce || !('IntersectionObserver' in window)) { scenes.forEach(function (s) { s.classList.add('in'); }); return; }
   document.documentElement.classList.add('armed');
-  var io = new IntersectionObserver(function (es) {
-    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.3 });
-  scenes.forEach(function (s) { io.observe(s); });
-  requestAnimationFrame(function () { scenes[0] && scenes[0].classList.add('in'); });
+  function startReveal() {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.3 });
+    scenes.forEach(function (s) { io.observe(s); });
+    requestAnimationFrame(function () { scenes[0] && scenes[0].classList.add('in'); });
+  }
+  // wait for the envelope to open so the first card animates in front of the guest
+  if (document.getElementById('intro')) document.addEventListener('invitation-opened', startReveal, { once: true });
+  else startReveal();
 
   var c = document.getElementById('dust'), g = c.getContext('2d'), dpr = Math.min(window.devicePixelRatio || 1, 2), P = [];
   function size() { c.width = innerWidth * dpr; c.height = innerHeight * dpr; }

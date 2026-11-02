@@ -17,7 +17,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&family=Cormorant+Garamond:ital,wght@0,500;1,300&family=Italiana&family=Pinyon+Script&display=swap">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="intro.css?v=4">
 <style>
 :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
 html, body { margin: 0; }
@@ -25,11 +26,40 @@ img { max-width: 100%; }
 </style>
 </head>
 <body>
+<div id="intro" role="dialog" aria-label="Invitation envelope">
+  <div class="intro-wrap">
+    <p class="intro-kicker">You’re invited</p>
+    <button class="env" id="env" type="button" aria-label="Open the invitation">
+      <span class="env-back"></span>
+      <span class="env-card"><span><span class="c1" style="display:block">CHAMPI</span><span class="c2" style="display:block">50</span></span></span>
+      <span class="env-front"><svg viewBox="0 0 700 500" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="pk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a130c"/><stop offset="1" stop-color="#0c0906"/></linearGradient>
+        <linearGradient id="gl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7e5c2a"/><stop offset=".5" stop-color="#f3e3b5"/><stop offset="1" stop-color="#9c7536"/></linearGradient></defs>
+        <polygon points="0,0 360,270 0,500" fill="url(#pk)"/><polygon points="700,0 340,270 700,500" fill="url(#pk)"/>
+        <polygon points="0,500 350,235 700,500" fill="#120d08"/>
+        <polyline points="0,500 350,235 700,500" fill="none" stroke="url(#gl)" stroke-width="1.6"/>
+        <rect x="1" y="1" width="698" height="498" fill="none" stroke="url(#gl)" stroke-width="1.4"/>
+      </svg></span>
+      <span class="env-flap"><svg viewBox="0 0 700 310" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="fl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#211810"/><stop offset="1" stop-color="#140f09"/></linearGradient>
+        <linearGradient id="gl2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7e5c2a"/><stop offset=".5" stop-color="#f3e3b5"/><stop offset="1" stop-color="#9c7536"/></linearGradient></defs>
+        <polygon points="0,0 700,0 350,310" fill="url(#fl)"/>
+        <polyline points="0,0 350,310 700,0" fill="none" stroke="url(#gl2)" stroke-width="1.8"/>
+        <polyline points="40,0 350,275 660,0" fill="none" stroke="#b8893f" stroke-opacity=".35" stroke-width="1"/>
+      </svg></span>
+      <span class="seal"><span>C</span></span>
+    </button>
+    <p class="intro-tap">TAP TO OPEN<i></i></p>
+  </div>
+</div>
 <canvas id="dust" aria-hidden="true"></canvas>
 <main class="book" id="book"></main>
 <noscript><p style="text-align:center;color:#eee2ca;font-family:Georgia,serif">Please enable JavaScript to view this invitation.</p></noscript>
-<script src="layout.js?v=3"></script>
-<script src="content.js?v=3"></script>
-<script src="app.js?v=3"></script>
+<script src="layout.js?v=4"></script>
+<script src="content.js?v=4"></script>
+<script src="app.js?v=4"></script>
+<audio id="bgm" src="music.mp3" loop preload="auto"></audio>
+<button id="music" type="button" hidden aria-pressed="false" aria-label="Music on or off"><span class="bars"><b></b><b></b><b></b><b></b></span></button>
+<script src="intro.js?v=4"></script>
 </body>
 </html>
