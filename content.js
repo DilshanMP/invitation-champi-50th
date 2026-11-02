@@ -32,7 +32,7 @@ window.INVITE = {
   "time": "6.00 PM – 12.00 Midnight",   // Time
   "k26": "VENUE",
   "venue": "ITC Ratnadipa",   // Venue
-  "hall": "[ HALL NAME ]",   // Hall name
+  "hall": "SANGAM BALLROOM",   // Hall name
   "k29": "Colombo, Sri Lanka",
   "k30": "VIEW ON MAP ›",
   "k31": "6°55 N  ·  79°50 E",

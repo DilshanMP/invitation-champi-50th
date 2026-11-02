@@ -39,7 +39,7 @@
       btn.hidden = false;
       window.scrollTo(0, 0);
       document.dispatchEvent(new Event('invitation-opened'));
-    }, reduce ? 200 : 2600);
+    }, reduce ? 200 : 2700);
   }
   env.addEventListener('click', open);
   document.documentElement.classList.add('locked');
