@@ -1,5 +1,9 @@
 (function () {
   var LAYOUT = window.LAYOUT || [], TEXT = window.INVITE || {};
+  // Two versions of the same invitation: the normal link says "YOU ARE",
+  // the family link (?family or #family) says "YOU & YOUR FAMILY ARE".
+  var family = /(^|[?&#])family\b/i.test(location.search + location.hash);
+  if (!family && TEXT.k08_single != null) TEXT.k08 = TEXT.k08_single;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var book = document.getElementById('book');
 
